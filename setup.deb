@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Ensure the script is run as root
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root (use sudo)"
+  exit
+fi
+
+echo "--- Initializing System Update ---"
+apt update && apt upgrade -y
+
+echo "--- Enabling 32-bit Architecture (i386) ---"
+dpkg --add-architecture i386
+apt update
+
+echo "--- Installing Repository Prerequisites ---"
+apt install -y wget gpg software-properties-common apt-transport-https
+
+echo "--- Adding VS Code Repository ---"
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list
+rm -f packages.microsoft.gpg
+
+echo "--- Updating Package Lists ---"
+apt update
+
+echo "--- Installing Applications & LibreOffice Suite ---"
+apt install -y \
+    steam \
+    vim \
+    git \
+    lutris \
+    wine \
+    wine64 \
+    wine32 \
+    code \
+    virt-manager \
+    xclip \
+    gimp \
+    shotcut \
+    vlc \
+    libreoffice
+
+echo "--- Cleaning up ---"
+apt autoremove -y
+
+echo "--- Installation Complete! ---"
