@@ -1,0 +1,6 @@
+sudo apt install python3-venv
+# 1. Create the virtual environment (named '.venv')
+python3 -m venv .venv
+
+# 2. Activate the virtual environment
+source .venv/bin/activate
