@@ -42,5 +42,5 @@ def presskey(btn: int):
         print(e)
     d.sync()
     
-def sleep(secs: int):
+def sleep(secs: float):
     time.sleep(secs)
