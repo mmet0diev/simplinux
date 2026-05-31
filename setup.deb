@@ -42,6 +42,9 @@ apt install -y \
     vlc \
     libreoffice
 
+# add your packages to install here
+sudo apt install zerotier-one
+
 echo "--- Cleaning up ---"
 apt autoremove -y
 
